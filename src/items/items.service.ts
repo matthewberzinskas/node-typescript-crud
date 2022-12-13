@@ -44,6 +44,7 @@ export const findAll = async (): Promise<Item[]> => Object.values(items);
 
 export const find = async (id: number): Promise<Item> => items[id];
 
+// Create
 export const create = async (newItem: BaseItem): Promise<Item> => {
   const id = new Date().valueOf();
 
@@ -53,4 +54,31 @@ export const create = async (newItem: BaseItem): Promise<Item> => {
   };
 
   return items[id];
+};
+
+// Update
+export const update = async (
+  id: number,
+  itemUpdate: BaseItem
+): Promise<Item | null> => {
+  const item = await find(id);
+
+  if (!item) {
+    return null;
+  }
+
+  items[id] = { id, ...itemUpdate };
+
+  return items[id];
+};
+
+// Remove
+export const remove = async (id: number): Promise<null | void> => {
+  const item = await find(id);
+
+  if (!item) {
+    return null;
+  }
+
+  delete items[id];
 };
